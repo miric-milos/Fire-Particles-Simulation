@@ -6,7 +6,6 @@ using namespace std;
 
 int main(int argv, char* args[])
 {
-
 	const int SCREEN_WIDTH   = 800;
 	const int SCREEN_HEIGHT  = 600;
 
