@@ -47,20 +47,15 @@ namespace _custom
 			return false;
 		}
 
-		Uint32* buffer = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT]; // Array the size of the window resolution
+		m_buffer = new Uint32[SCREEN_WIDTH * SCREEN_HEIGHT]; // Array the size of the window resolution
 
 		// Fills the buffer with pixel data
-		memset(buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
+		memset(m_buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(Uint32));
 
-		for (size_t i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i++)
+		for (size_t i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
 		{
-			*(buffer + i) = 0x0000FFFF;
+			*(m_buffer + i)  = 0xFF0000FF;
 		}
-
-		SDL_UpdateTexture(m_texture, NULL, buffer, SCREEN_WIDTH * sizeof(Uint32));
-		SDL_RenderClear(m_renderer);
-		SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
-		SDL_RenderPresent(m_renderer);
 
 		// Everything succeeded
 		return true;
@@ -78,6 +73,29 @@ namespace _custom
 		}
 
 		return true;
+	}
+
+	void Screen::update()
+	{
+		SDL_UpdateTexture(m_texture, NULL, m_buffer, SCREEN_WIDTH * sizeof(Uint32));
+		SDL_RenderClear(m_renderer);
+		SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
+		SDL_RenderPresent(m_renderer);
+	}
+
+	void Screen::setPixel(int x, int y, Uint8 red, Uint8 green, Uint8 blue)
+	{
+		Uint32 color = 0;
+		// FF moves two places to the left, then another FF gets added  
+		color += red;
+		color <<= 8;
+		color += green;
+		color <<= 8;
+		color += blue;
+		color <<= 8;
+		color += 0xFF;
+
+		*(m_buffer + (y + SCREEN_WIDTH) + x) = color;
 	}
 
 	void Screen::close()
