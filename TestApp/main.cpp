@@ -21,11 +21,16 @@ int main(int argv, char* args[])
 	{
 		// Update particles
 		// Draw particles
-		for (int x = 0; x < Screen::SCREEN_HEIGHT; ++x)
+		int elapsed = SDL_GetTicks();
+		auto blue = (unsigned char)((1 + sin(elapsed * 0.0001)) * 128);
+		auto red = (unsigned char)((1 + sin(elapsed * 0.0002)) * 128);
+		auto green = (unsigned char)((1 + sin(elapsed * 0.001)) * 128);
+		// cout << blue << "  Elapsed: "<< elapsed << endl;
+		for (int x = 0; x < Screen::SCREEN_WIDTH; ++x)
 		{
-			for (int y = 0; y < Screen::SCREEN_WIDTH; ++y)
+			for (int y = 0; y < Screen::SCREEN_HEIGHT; ++y)
 			{
-				screen.setPixel(x, y, 255, 0, 0);
+				screen.setPixel(y, x, red, green, blue);
 			}
 		}
 

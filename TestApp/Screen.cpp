@@ -54,7 +54,7 @@ namespace _custom
 
 		for (size_t i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
 		{
-			*(m_buffer + i)  = 0xFF0000FF;
+			*(m_buffer + i)  = 0xFFFF00FF;
 		}
 
 		// Everything succeeded
@@ -95,7 +95,7 @@ namespace _custom
 		color <<= 8;
 		color += 0xFF;
 
-		*(m_buffer + (y + SCREEN_WIDTH) + x) = color;
+		*(m_buffer + (x * SCREEN_WIDTH) + y) = color;
 	}
 
 	void Screen::close()
