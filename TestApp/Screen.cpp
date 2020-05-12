@@ -54,7 +54,7 @@ namespace _custom
 
 		for (size_t i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; ++i)
 		{
-			*(m_buffer + i)  = 0xFFFF00FF;
+			*(m_buffer + i)  = 0x000000FF;
 		}
 
 		// Everything succeeded
@@ -87,6 +87,12 @@ namespace _custom
 	{
 		Uint32 color = 0;
 		// FF moves two places to the left, then another FF gets added  
+
+		if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT)
+		{
+			return;
+		}
+
 		color += red;
 		color <<= 8;
 		color += green;
@@ -95,7 +101,7 @@ namespace _custom
 		color <<= 8;
 		color += 0xFF;
 
-		*(m_buffer + (x * SCREEN_WIDTH) + y) = color;
+		*(m_buffer + (y * SCREEN_WIDTH) + x) = color;
 	}
 
 	void Screen::close()
