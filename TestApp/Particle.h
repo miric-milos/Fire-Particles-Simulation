@@ -7,4 +7,5 @@ public:
 	double m_y;
 
 	Particle();
+	void update();
 };
